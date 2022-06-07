@@ -1,0 +1,134 @@
+#ifndef EX2_PLAYER_H
+#define EX2_PLAYER_H
+
+#include <iostream>
+#include <string>
+#include "../HealthPoints.h"
+#include "../utilities.h"
+#include "Rogue.h"
+#include "Wizard.h"
+#include "Warrior.h"
+
+const int DOUBLE = 2;
+const int DEFAULT_LEVEL = 1; 
+const int DEFAULT_HP = 100;
+const int DEFAULT_FORCE = 5;
+const int DEFAULT_COINS = 5;
+
+class Player {
+public:
+    /**
+     * @brief C'tor of Player class
+     *
+     * @param name - The name of the player.
+     * @param hp - Amount of health points for player.
+     * @param force - Amount of force for player
+     * @return
+     *      A new instance of Player.
+    */
+    Player(const std::string name);
+
+    /**
+     * @brief prints the player info:
+     *
+     * @return
+     *      void
+    */
+    virtual void printInfo() = 0;
+
+    /**
+     * @brief increases the player level by one
+     * 
+     * @return 
+     *      void
+     */
+    void levelUp();
+
+    /**
+     * @brief returns the level of the player
+     * 
+     * @return 
+     *      level of player
+     */
+    int getLevel();
+
+    /**
+     * @brief buffs the player's force
+     * 
+     * @param amount - the amount of force that will increase for the player
+     * 
+     * @return 
+     *      void
+     */
+    void buff(const int amount);
+
+    /**
+     * @brief increases the player's HP by specific amount
+     * 
+     * @param amount - the amount of HP that will increase for the player
+     * 
+     * @return 
+     *      void
+     */
+    virtual void heal(const int amount);
+
+    /**
+     * @brief decreases the player's HP by specific amount
+     * 
+     * @param amount - the amount of HP that will decrease for the player
+     * 
+     * @return 
+     *      void
+     */
+    void damage(const int amount);
+
+    /**
+     * @brief checks if the player's HP is 0
+     * 
+     * @return 
+     *      true - if player's HP is 0
+     *      false - if player's HP is not 0
+     */
+    bool isKnockedOut();
+
+    /**
+     * @brief increases the player's coins by a specific amount
+     * 
+     * @param amount - the amount of coins that will increase for the player
+     */
+    virtual void addCoins(const int amount);
+
+    /**
+     * @brief decreases the player's coins by a specific amount
+     * 
+     * @param amount - the amount of coins that will decrease for the player
+     * 
+     * @return 
+     *      true - if the player has successfully payed the amount
+     *      false - if the amount was higher than the player's coins, so player cannot pay
+     */
+    bool pay(const int amount);
+
+    /**
+     * @brief get the Attack Strength of the player, which is equal to the sum of player's force and player's level
+     * 
+     * @return 
+     *      the player's Attack Strength  
+     */
+    virtual int getAttackStrength();
+
+    Player(const Player& player) = default;
+    Player() = default; // just in case we recieve no args
+    ~Player() = default;
+    Player& operator=(const Player& player) = default;
+
+
+private:
+    const char* m_name;
+    int m_level;
+    int m_force;
+    HealthPoints m_hp;
+    int m_coins;
+};
+
+#endif // EX2_PLAYER_H
