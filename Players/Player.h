@@ -15,6 +15,8 @@ const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_COINS = 5;
 
+using namespace std;
+
 class Player {
 public:
     /**
@@ -26,15 +28,7 @@ public:
      * @return
      *      A new instance of Player.
     */
-    Player(const std::string name);
-
-    /**
-     * @brief prints the player info:
-     *
-     * @return
-     *      void
-    */
-    virtual void printInfo() = 0;
+    Player(const string name);
 
     /**
      * @brief increases the player level by one
@@ -62,6 +56,15 @@ public:
      */
     void buff(const int amount);
 
+    /**
+     * @brief debuff the player's force
+     * 
+     * @param amount - the amount of force that will decrease for the player
+     * 
+     * @return 
+     *      void
+     */
+    void debuff(const int amount);
     /**
      * @brief increases the player's HP by specific amount
      * 
@@ -117,14 +120,43 @@ public:
      */
     virtual int getAttackStrength();
 
+    /**
+     * @brief prints the player info:
+     *
+     * @return
+     *      void
+    */
+    void printInfo();
+
+    /**
+     * @brief ends the player's life :'(
+     * 
+     * @return void 
+     */
+    void killPlayer();
+
+    /**
+     * @brief returns name of player
+     * 
+     * @return name of player 
+     */
+    string getName();
+
+    /**
+     * @brief returns amount of coins the player has 
+     * 
+     * @return amount of coins the player has 
+     */
+    int getCoins();
+
     Player(const Player& player) = default;
-    Player() = default; // just in case we recieve no args
-    ~Player() = default;
+    Player() = default;
+    virtual ~Player() = default;
     Player& operator=(const Player& player) = default;
 
-
-private:
-    const char* m_name;
+protected:
+    const string m_name;
+    const string m_role;
     int m_level;
     int m_force;
     HealthPoints m_hp;

@@ -10,6 +10,11 @@ HealthPoints::HealthPoints(int maxHP)
     m_currentHP = maxHP;
 }
 
+int HealthPoints::getCurrentHP() const
+{
+    return m_currentHP;
+}
+
 HealthPoints& HealthPoints::operator+=(const int& amount)
 {
     m_currentHP += amount;

@@ -6,6 +6,13 @@
 
 #include <string>
 #include "../Players/Player.h"
+#include "Battle.h"
+#include "Fairy.h"
+#include "Goblin.h"
+#include "Merchant.h"
+#include "Pitfall.h"
+#include "Treasure.h"
+
 
 /*
  *  CardType:
@@ -27,7 +34,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Card(CardType type, const CardStats& stats);
+    Card();
 
 
     /*
@@ -37,7 +44,7 @@ public:
      * @return
      *      void
     */
-    void applyEncounter(Player& player) const;
+    virtual void applyEncounter(Player& player) const = 0;
 
 
     /*
@@ -46,7 +53,7 @@ public:
      * @return
      *      void
     */
-    void printInfo() const;
+    virtual void printInfo() const;
 
 
     /*
@@ -59,14 +66,12 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Card(const Card&) = default;
-    ~Card() = default;
+    virtual ~Card() = default;
     Card& operator=(const Card& other) = default;
 
 
-private:
-    CardType m_effect;
-    CardStats m_stats;
-
+protected:
+    const string m_name;
 };
 
 

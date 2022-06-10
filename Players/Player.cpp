@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(const std::string name) 
+Player::Player(const string name) 
 {
     m_name = name;
     m_level = DEFAULT_LEVEL;
@@ -29,6 +29,11 @@ int Player::getLevel()
 void Player::buff(const int amount) 
 {
     m_force += (amount > 0) ? amount : 0;
+}
+
+void Player::debuff(const int amount) 
+{
+    m_force -= (amount > 0) ? amount : 0;
 }
 
 void Player::heal(const int amount) 
@@ -64,4 +69,26 @@ bool Player::pay(const int amount)
 int Player::getAttackStrength() 
 {
     return m_force + m_level;
+}
+
+void Player::printInfo() 
+{
+    ostream ostream;
+    printPlayerInfo(ostream, m_name, m_role, m_level, m_force, m_hp, m_coins);
+    cout << ostream << endl;
+}
+
+void Player::killPlayer()
+{
+    damage(m_hp.getCurrentHP);
+}
+
+string Player::getName()
+{
+    return m_name;
+}
+
+int Player::getCoins()
+{
+    return m_coins;
 }

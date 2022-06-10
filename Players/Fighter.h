@@ -3,10 +3,13 @@
 
 #include "Player.h"
 
+const string FIGHTER = "Fighter";
+
 class Fighter : public Player
 {
+    Fighter(const string name);
+
     int getAttackStrength() override;
-    void printInfo() override;
 };
 
 #endif // EX4_WARRIOR_H

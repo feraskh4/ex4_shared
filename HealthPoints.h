@@ -16,6 +16,8 @@ public:
     ~HealthPoints() = default;
     HealthPoints& operator=(const HealthPoints& other) = default;
 
+    int getCurrentHP() const;
+
     HealthPoints& operator+=(const int& amount);
     HealthPoints operator+(const int& amount) const;
     HealthPoints& operator-=(const int& amount);
