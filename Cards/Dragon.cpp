@@ -1,7 +1,7 @@
 #include "Dragon.h"
 
-Dragon::Dragon()
-:   m_name(DRAGON), m_force(DRAGON_FORCE), m_loot(DRAGON_LOOT), m_damageOnDefeat(DRAGON_DAMAGE)
+Dragon::Dragon() :
+    Battle(DRAGON_FORCE, DRAGON_LOOT, DRAGON_DAMAGE, DRAGON)
 {}
 
 void Dragon::applyLossEffect(Player& player) const

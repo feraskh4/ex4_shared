@@ -7,6 +7,7 @@ const string ROGUE = "Rogue";
 
 class Rogue : public Player
 {
+public:
     Rogue(const string name);
     void addCoins(const int amount) override;
 };

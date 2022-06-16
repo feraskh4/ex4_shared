@@ -7,6 +7,7 @@ const string WIZARD = "Wizard";
 
 class Wizard : public Player
 {
+public:
     Wizard(const string name);
     void heal(const int amount) override;
 };

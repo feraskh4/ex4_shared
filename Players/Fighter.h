@@ -7,6 +7,7 @@ const string FIGHTER = "Fighter";
 
 class Fighter : public Player
 {
+public:
     Fighter(const string name);
 
     int getAttackStrength() override;

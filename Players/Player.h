@@ -4,16 +4,13 @@
 #include <iostream>
 #include <string>
 #include "../HealthPoints.h"
-#include "../utilities.h"
-#include "Rogue.h"
-#include "Wizard.h"
-#include "Warrior.h"
+
 
 const int DOUBLE = 2;
 const int DEFAULT_LEVEL = 1; 
 const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
-const int DEFAULT_COINS = 5;
+const int DEFAULT_COINS = 10;
 
 using namespace std;
 
@@ -121,14 +118,6 @@ public:
     virtual int getAttackStrength();
 
     /**
-     * @brief prints the player info:
-     *
-     * @return
-     *      void
-    */
-    void printInfo();
-
-    /**
      * @brief ends the player's life :'(
      * 
      * @return void 
@@ -154,13 +143,19 @@ public:
     virtual ~Player() = default;
     Player& operator=(const Player& player) = default;
 
+    friend ostream& operator<<(ostream& os, const Player& other);
+
 protected:
     const string m_name;
-    const string m_role;
+    string m_role;
     int m_level;
     int m_force;
-    HealthPoints m_hp;
+    int m_hp;
     int m_coins;
 };
+
+// checks if the name is valid for a player
+bool isValidPlayerName(const string name);
+
 
 #endif // EX2_PLAYER_H

@@ -1,7 +1,7 @@
 #include "Vampire.h"
 
 Vampire::Vampire()
-:   m_name(VAMPIRE), m_force(VAMPIRE_FORCE), m_loot(VAMPIRE_LOOT), m_damageOnDefeat(VAMPIRE_DAMAGE)
+: Battle(VAMPIRE_FORCE, VAMPIRE_LOOT, VAMPIRE_DAMAGE, VAMPIRE)
 {}
 
 void Vampire::applyLossEffect(Player& player) const

@@ -1,10 +1,16 @@
 #include "Wizard.h"
 
 Wizard::Wizard(const string name)
-:   Player(name), m_role(WIZARD)
-{}
+:   Player(name)
+{
+    m_role = WIZARD;
+}
 
-void Wizard::heal(const int amount) override
+void Wizard::heal(const int amount)
 {
     m_hp += (amount > 0) ? DOUBLE*amount : 0;
+    if (m_hp > DEFAULT_HP)
+    {
+        m_hp = DEFAULT_HP;
+    }
 }

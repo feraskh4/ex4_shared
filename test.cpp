@@ -1,4 +1,3 @@
-
 #include <functional>
 #include <string>
 #include <iostream>
@@ -80,11 +79,12 @@ bool compareFiles(const string &filename1, const string &filename2)
 bool GeneralGameSimulationTest(const string &tempDeckFilename, string input, string deck, string expectedOutputFileName)
 {
     //   init cin from file
+
     createTextFile(tempDeckFilename+".txt",deck);
+
     istringstream in(input);
     std::streambuf *cinbuf = std::cin.rdbuf(); //save old buf
     std::cin.rdbuf(in.rdbuf());
-
     std::ofstream outfile(tempDeckFilename+"out.txt");
     std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
     std::cout.rdbuf(outfile.rdbuf());
@@ -239,7 +239,7 @@ bool badPlayerInputTest()
 bool merchantInputTest()
 {
     const string tmp_file("merchantInput_test");
-    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter"
+    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter\n"
                  "1\n"
                  "1\n"
                  "0\n"

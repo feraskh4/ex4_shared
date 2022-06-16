@@ -2,17 +2,16 @@
 #define EX4_BATTLE_H
 
 #include "Card.h"
-#include "Dragon.h"
-#include "Goblin.h"
-#include "Vampire.h"
+
+const string DRAGON = "Dragon";
 
 class Battle : public Card
 {
 public:
-    Battle() {}
+    Battle(int force, int loot, int damage, string name);
     
-    void applyEncounter(Player& player) const override;
-    void printInfo() const override;
+    void applyEncounter(shared_ptr<Player> player) const override;
+    void printInfo(ostream& os) const override;
     virtual void applyLossEffect(Player& player) const = 0;
 
 protected:

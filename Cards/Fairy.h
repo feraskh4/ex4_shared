@@ -2,6 +2,7 @@
 #define EX4_FAIRY_H
 
 #include "Card.h"
+#include "../Players/Wizard.h"
 
 const string FAIRY = "Fairy";
 const int FAIRY_HEAL = 10;
@@ -9,9 +10,9 @@ const int FAIRY_HEAL = 10;
 class Fairy : public Card
 {
 public:
-    Fairy(const string name);
+    Fairy();
     
-    void applyEncounter(Player& player) const override;
+    void applyEncounter(shared_ptr<Player> player) const override;
 };
 
 #endif // EX4_FAIRY_H

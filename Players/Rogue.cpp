@@ -1,8 +1,10 @@
 #include "Rogue.h"
 
 Rogue::Rogue(const string name)
-:   Player(name), m_role(ROGUE)
-{}
+:   Player(name)
+{
+    m_role = ROGUE;
+}
 
 void Rogue::addCoins(const int amount)
 {

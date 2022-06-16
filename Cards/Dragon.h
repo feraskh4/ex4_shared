@@ -3,7 +3,6 @@
 
 #include "Battle.h"
 
-const string DRAGON = "Dragon";
 const int DRAGON_FORCE = 25;
 const int DRAGON_LOOT = 100;
 const int DRAGON_DAMAGE = 0;

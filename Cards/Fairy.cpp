@@ -1,15 +1,16 @@
 #include "Fairy.h"
+#include "../utilities.h"
 
 Fairy::Fairy()
-:   m_name(FAIRY)
+:   Card(FAIRY)
 {}
 
-void Fairy::applyEncounter(Player& player)
+void Fairy::applyEncounter(shared_ptr<Player> player) const
 {
-    bool isWizard = player.getRole() == WIZARD;
+    bool isWizard =  dynamic_pointer_cast<Wizard>(player) != nullptr;
     printFairyMessage(isWizard);
     if (isWizard)
     {
-        player.heal(FAIRY_HEAL);
+        player->heal(FAIRY_HEAL);
     }
 }

@@ -1,15 +1,16 @@
 #include "Barfight.h"
+#include "../utilities.h"
 
 Barfight::Barfight()
-:   m_name(BARFIGHT)
+:   Card(BARFIGHT)
 {}
 
-void Barfight::applyEncounter(Player& player)
+void Barfight::applyEncounter(shared_ptr<Player> player) const
 {
-    bool isFighter = player.getRole() == FIGHTER;
+    bool isFighter = dynamic_pointer_cast<Fighter>(player) != nullptr;
     printBarfightMessage(isFighter);
     if (!isFighter)
     {
-        player.damage(BAR_DAMAGE);
+        player->damage(BAR_DAMAGE);
     }
 }

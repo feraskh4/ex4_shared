@@ -1,15 +1,14 @@
 #include "Merchant.h"
+#include "../utilities.h"
 
 Merchant::Merchant()
-:   m_name(MERCHANT)
+:   Card(MERCHANT)
 {}
 
-void Merchant::applyEncounter(Player& player)
+void Merchant::applyEncounter(shared_ptr<Player> player) const
 {
-    ostream startMsg;
     int type;
-    printMerchantInitialMessageForInteractiveEncounter(startMsg, player.getName(), player.getCoins());
-    cout << startMsg << endl;
+    printMerchantInitialMessageForInteractiveEncounter(cout, player->getName(), player->getCoins());
     cin >> type;
     while (type != LEAVE && type != HP_POTION && type != FORCE_BOOST)
     {
@@ -27,13 +26,20 @@ void Merchant::applyEncounter(Player& player)
         cost = BOOST_COST;
     }
 
-    if(!player.pay(POTION_COST))
+    if(!player->pay(cost))
     {
-        printMerchantInsufficientCoins(startMsg);
+        printMerchantInsufficientCoins(cout);
         return;
     }
 
-    ostream summary;
-    printMerchantSummary(summary, player.getName(), type, cost);
-    cout << summary << endl;
+    if (type == HP_POTION)
+    {
+        player->heal(1);
+    }
+    else if (type == FORCE_BOOST)
+    {
+        player->buff(1);
+    }
+
+    printMerchantSummary(cout, player->getName(), type, cost);
 }

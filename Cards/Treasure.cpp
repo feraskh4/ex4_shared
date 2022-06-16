@@ -1,11 +1,12 @@
 #include "Treasure.h"
+#include "../utilities.h"
 
 Treasure::Treasure()
-:   m_name(TREASURE)
+:   Card(TREASURE)
 {}
 
-void Treasure::applyEncounter(Player& player)
+void Treasure::applyEncounter(shared_ptr<Player> player) const
 {
-    player.pay(TREASURE_REWARD);
+    player->addCoins(TREASURE_REWARD);
     printTreasureMessage();
 }

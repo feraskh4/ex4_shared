@@ -1,26 +1,31 @@
 #include "Battle.h"
+#include "../utilities.h"
 
-void Battle::applyEncounter(Player& player) const
+Battle::Battle(int force, int loot, int damage, string name)
+:   Card(name),
+    m_force(force),
+    m_loot(loot),
+    m_damageOnDefeat(damage)
+{}
+
+void Battle::applyEncounter(shared_ptr<Player> player) const
 {
-    if (player.getAttackStrength() >= m_force) 
+    if (player->getAttackStrength() >= m_force)
     {
-        player.levelUp();
-        player.addCoins(m_stats.loot);
-        printWinBattle(player.getName(), m_name);
+        player->levelUp();
+        player->addCoins(m_loot);
+        printWinBattle(player->getName(), m_name);
     } 
     else 
     {
-        applyLossEffect(player);
-        printLossBattle(player.getName(), m_name);
+        applyLossEffect(*player);
+        printLossBattle(player->getName(), m_name);
     }            
 }
 
-void Battle::printInfo() const
+void Battle::printInfo(ostream& os) const
 {
-    ostream ostream;
-    printCardDetails(ostream, m_name);
-    printMonsterDetails(ostream, m_force, m_damageOnDefeat, m_loot, m_name==DRAGON)
-    printEndOfCardDetails(ostream);
-    cout << ostream << endl;
-    
+    printCardDetails(os, m_name);
+    printMonsterDetails(os, m_force, m_damageOnDefeat, m_loot, m_name==DRAGON);
+    printEndOfCardDetails(os);
 }

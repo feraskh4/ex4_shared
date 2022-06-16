@@ -4,37 +4,19 @@
 #ifndef EX2_Card_H
 #define EX2_Card_H
 
+#include <memory>
 #include <string>
 #include "../Players/Player.h"
-#include "Battle.h"
-#include "Fairy.h"
-#include "Goblin.h"
-#include "Merchant.h"
-#include "Pitfall.h"
-#include "Treasure.h"
-
-
-/*
- *  CardType:
- *  Each card has an type:
- *  BATTLE - Battle against a monster.
- *  BUFF - Increase your player's force by 'm_force' points of CardStats.
- *  HEAL - Increase your player's HP by 'm_heal' points  of CardStats (no more than maxHP points).
- *  TREASURE - Get 'm_profit' coins of CardStats.
-*/
-enum class CardType {Battle, Buff, Heal, Treasure}; // The type of the Card
 
 class Card {
 public:
     /*
      * C'tor of Card class
      *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
      * @return
      *      A new instance of Card.
     */
-    Card();
+    Card(string name) : m_name(name) {}
 
 
     /*
@@ -44,7 +26,7 @@ public:
      * @return
      *      void
     */
-    virtual void applyEncounter(Player& player) const = 0;
+    virtual void applyEncounter(shared_ptr<Player> player) const = 0;
 
 
     /*
@@ -53,14 +35,7 @@ public:
      * @return
      *      void
     */
-    virtual void printInfo() const;
-
-
-    /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-    */
-    Card(): m_effect(CardType::Treasure), m_stats() {}
-
+    virtual void printInfo(ostream& os) const;
 
     /*
      * Here we are explicitly telling the compiler to use the default methods
@@ -69,9 +44,10 @@ public:
     virtual ~Card() = default;
     Card& operator=(const Card& other) = default;
 
+    friend ostream& operator<<(ostream& os, const Card& other);
 
 protected:
-    const string m_name;
+    string m_name;
 };
 
 

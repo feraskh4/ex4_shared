@@ -1,15 +1,16 @@
 #include "Pitfall.h"
+#include "../utilities.h"
 
 Pitfall::Pitfall()
-:   m_name(PITFALL)
+:   Card(PITFALL)
 {}
 
-void Pitfall::applyEncounter(Player& player)
+void Pitfall::applyEncounter(shared_ptr<Player> player) const
 {
-    bool isRogue = player.getRole() == ROGUE;
+    bool isRogue =  dynamic_pointer_cast<Rogue>(player) != nullptr;;
     printPitfallMessage(isRogue);
     if (!isRogue)
     {
-        player.damage(PIT_DAMAGE);
+        player->damage(PIT_DAMAGE);
     }
 }
