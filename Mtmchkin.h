@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <fstream>
 
 #include "Players/Player.h"
 #include "Players/Rogue.h"
@@ -89,7 +90,7 @@ private:
 
 void buildCardMap(map<string,shared_ptr<Card>(*)()>& cardMap);
 void buildPlayersMap(map<string, shared_ptr<Player>(*)(string)>& playerMap);
-void receiveCardsInfo(fstream& source, deque<shared_ptr<Card>>& cardsQueue);
+void receiveCardsInfo(ifstream& source, deque<shared_ptr<Card>>& cardsQueue);
 int receiveTeamSize();
 void receivePlayersInfo(deque<shared_ptr<Player>>& playersQueue, const int teamSize);
 

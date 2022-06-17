@@ -4,7 +4,9 @@
 // file exceptions should be inhereted from std::exceptions
 #include <exception>
 
+
 const int MAX_LINE = 256;
+const std::string ERROR_MSG = "Deck File Error: File format error in line ";
 
 class DeckFileNotFound : public std::exception
 {
@@ -15,16 +17,16 @@ public:
     }
 };
 
+
 class DeckFileFormatError  : public std::exception
 {
-    int m_lineNum;
+    std::string m_msg;
 public:
-    DeckFileFormatError(int line) : m_lineNum(line) {}
+    DeckFileFormatError(int line) : m_msg(ERROR_MSG+std::to_string(line)) {}
+    virtual ~DeckFileFormatError()override = default;
     const char* what() const noexcept override
     {
-        char* msg = new char[MAX_LINE]();
-        sprintf(msg, "Deck File Error: File format error in line %d", m_lineNum);
-        return msg;
+        return (m_msg).c_str();
     }
 };
 

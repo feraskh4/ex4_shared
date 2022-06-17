@@ -1,28 +1,19 @@
 #include "utilities.h"
 
 #include "Mtmchkin.h"
-#include <fstream>
 
 // Mtmchkin Class
 Mtmchkin::Mtmchkin(const string& fileName)
 {
-    fstream source(fileName);
-    if (!source)
+    printStartGameMessage();
+    ifstream source(fileName);
+    if (!source.is_open())
     {
         throw DeckFileNotFound();
     }
     receiveCardsInfo(source, m_cardsQueue);
-    /*try
-    {
-        
-    }
-    // MAYBE no need for a catch because it we try & catch when calling mtmchkin c'tor
-    catch(const std::exception& e) // catch the exceptions and throw them again
-    {
-        throw e;
-    }*/
 
-    printStartGameMessage();
+    
     m_isGameOver = false;
     m_roundsPlayed = 0;
     m_playersAmount = receiveTeamSize();
@@ -135,7 +126,7 @@ void buildPlayersMap(map<string, shared_ptr<Player>(*)(string)>& playerMap)
 }
 
 // receives cards from file and prepares the cards Queue
-void receiveCardsInfo(fstream& source, deque<shared_ptr<Card>>& cardsQueue)
+void receiveCardsInfo(ifstream& source, deque<shared_ptr<Card>>& cardsQueue)
 {
     map<string, shared_ptr<Card>(*)()> cardMap;
     map<string, shared_ptr<Card>(*)()>::iterator mapIt;
@@ -144,12 +135,15 @@ void receiveCardsInfo(fstream& source, deque<shared_ptr<Card>>& cardsQueue)
     string cardName;
     shared_ptr<Card> newCard = nullptr;
     int cardCounter = 0;
-    while (!source.eof() && source.peek() != EOF)
+    if (source.peek() == EOF)
     {
-        getline(source, cardName);
+        throw DeckFileInvalidSize();
+    }
+    while (source >> cardName)
+    {
         cardCounter++;
         mapIt = cardMap.find(cardName);
-        if (mapIt == cardMap.end()) // if card name is not in the map keys
+        if (mapIt == cardMap.end())
         {
             DeckFileFormatError err(cardCounter);
             throw err;
@@ -172,9 +166,15 @@ int receiveTeamSize()
     {
         printEnterTeamSizeMessage();
         cin >> input;
-        // use stoi (string to int and check if teamsize is valid and print fitting msg)
-        teamSize = stoi(input);
-        // bro find a way to check if u receieved a word with actual letters
+        try
+        {
+            teamSize = stoi(input);
+        }
+        catch (const invalid_argument& e)
+        {
+            printInvalidTeamSize();
+            continue;
+        }        
         if (teamSize < 2 || teamSize > 6)
         {
             printInvalidTeamSize();
@@ -228,7 +228,6 @@ void receivePlayersInfo(deque<shared_ptr<Player>>& playersQueue, const int teamS
 }
 
 // functions to return a built class
-// maybe put each one in its matching file??
 
 shared_ptr<Player> buildRogue(const string name)
 {
@@ -281,10 +280,6 @@ shared_ptr<Card> buildTreasure()
 
 shared_ptr<Card> buildMerchant()
 {
-    /*
-    shared_ptr<Merchant> result(new Merchant());
-    return dynamic_pointer_cast<Card>(result);
-     */
     shared_ptr<Card> card(new Merchant());
     return card;
 }
@@ -294,7 +289,6 @@ shared_ptr<Card> buildDragon()
     shared_ptr<Card> card(new Dragon());
     return card;
 }
-
 
 shared_ptr<Card> buildPitfall()
 {

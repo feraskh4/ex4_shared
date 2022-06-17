@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "../HealthPoints.h"
-
 
 const int DOUBLE = 2;
 const int DEFAULT_LEVEL = 1; 
